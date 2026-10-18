@@ -46,3 +46,20 @@ export interface EstudiantePerfil {
   activo: boolean;
   fechaRegistro: string;
 }   
+
+export interface Profesor {
+  id: number;
+  documento: string;
+  nombre: string;
+  correo: string;
+  telefono: string | null;
+  materias: string[];
+}
+
+export interface MateriaResumen {
+  id: number;
+  nombre: string;
+  creditos: number;
+  nombreProfesor: string;
+  inscritosActivos: number;
+}

@@ -1,0 +1,39 @@
+<div class="titulo">
+  <h1>Materias</h1>
+  <p>Las 10 materias disponibles, 3 créditos cada una.</p>
+</div>
+
+@if (error()) { <div class="mensaje-error">{{ error() }}</div> }
+
+<section class="resumen">
+  <div class="dato">
+    <span class="dato-titulo">Materias</span>
+    <span class="dato-valor">{{ materias().length }}</span>
+  </div>
+  <div class="dato">
+    <span class="dato-titulo">Créditos ofertados</span>
+    <span class="dato-valor">{{ totalCreditos() }}</span>
+  </div>
+  <div class="dato">
+    <span class="dato-titulo">Inscripciones activas</span>
+    <span class="dato-valor">{{ totalInscritos() }}</span>
+  </div>
+</section>
+
+<section class="panel">
+  <table>
+    <thead>
+      <tr><th>Materia</th><th>Profesor</th><th>Créditos</th><th>Estudiantes inscritos</th></tr>
+    </thead>
+    <tbody>
+      @for (m of materias(); track m.id) {
+        <tr>
+          <td class="nombre-materia">{{ m.nombre }}</td>
+          <td>{{ m.nombreProfesor }}</td>
+          <td>{{ m.creditos }}</td>
+          <td><span class="insc" [class.sin]="m.inscritosActivos === 0">{{ m.inscritosActivos }}</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

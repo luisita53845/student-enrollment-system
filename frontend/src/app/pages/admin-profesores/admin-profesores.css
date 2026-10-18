@@ -1,0 +1,12 @@
+.titulo { margin-bottom: 20px; }
+.titulo h1 { font-size: 28px; margin-bottom: 4px; }
+.titulo p { margin: 0; color: var(--gris-600); }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.ficha { background: var(--blanco); border: 1px solid var(--gris-200); border-top: 4px solid var(--naranja); border-radius: var(--radio); padding: 20px; }
+.cabecera { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.cabecera h3 { margin: 0; font-size: 18px; }
+.doc { color: var(--gris-600); font-size: 13px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--azul-100); color: var(--azul-700); font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.contacto { color: var(--gris-600); font-size: 14px; line-height: 1.6; margin: 0 0 14px; }
+.materias { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: var(--azul-900); color: var(--blanco); font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 14px; }

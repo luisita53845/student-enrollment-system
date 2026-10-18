@@ -1,0 +1,12 @@
+.titulo { margin-bottom: 20px; }
+.titulo h1 { font-size: 28px; margin-bottom: 4px; }
+.titulo p { margin: 0; color: var(--gris-600); }
+.resumen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+.dato { background: var(--blanco); border: 1px solid var(--gris-200); border-top: 4px solid var(--naranja); border-radius: var(--radio); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+.dato-titulo { color: var(--gris-600); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.dato-valor { color: var(--azul-900); font-size: 30px; font-weight: 700; }
+.panel { background: var(--blanco); border: 1px solid var(--gris-200); border-radius: var(--radio); padding: 20px; overflow-x: auto; }
+.nombre-materia { font-weight: 600; color: var(--azul-900); }
+.insc { background: var(--azul-100); color: var(--azul-700); font-weight: 700; padding: 4px 14px; border-radius: 12px; }
+.insc.sin { background: var(--gris-200); color: var(--gris-600); }
+@media (max-width: 760px) { .resumen { grid-template-columns: 1fr; } }

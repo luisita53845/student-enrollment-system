@@ -1,0 +1,24 @@
+<div class="titulo">
+  <h1>Profesores</h1>
+  <p>Cada profesor dicta exactamente 2 materias.</p>
+</div>
+
+@if (error()) { <div class="mensaje-error">{{ error() }}</div> }
+
+<section class="rejilla">
+  @for (p of profesores(); track p.id) {
+    <article class="ficha">
+      <div class="cabecera">
+        <span class="avatar">{{ iniciales(p.nombre) }}</span>
+        <div>
+          <h3>{{ p.nombre }}</h3>
+          <span class="doc">Doc. {{ p.documento }}</span>
+        </div>
+      </div>
+      <p class="contacto">{{ p.correo }}<br />{{ p.telefono ?? '—' }}</p>
+      <div class="materias">
+        @for (m of p.materias; track m) { <span class="chip">{{ m }}</span> }
+      </div>
+    </article>
+  }
+</section>

@@ -1,0 +1,30 @@
+<div class="layout">
+  <aside class="lateral">
+    <div class="marca-lateral">
+      <span class="logo">RE</span>
+      <div>
+        <strong>Registro de</strong><br />
+        <strong>Estudiantes</strong>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a class="menu-item" routerLink="/admin/estudiantes" routerLinkActive="activo">Estudiantes</a>
+      <a class="menu-item" routerLink="/admin/profesores" routerLinkActive="activo">Profesores</a>
+      <a class="menu-item" routerLink="/admin/materias" routerLinkActive="activo">Materias</a>
+    </nav>
+
+    <div class="perfil">
+      <span class="avatar">{{ iniciales() }}</span>
+      <div class="perfil-datos">
+        <strong>{{ nombre }}</strong>
+        <span>Administrador</span>
+      </div>
+      <button class="salir" (click)="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="principal">
+    <router-outlet />
+  </main>
+</div>
