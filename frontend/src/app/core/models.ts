@@ -17,3 +17,21 @@ export interface AuthRespuesta {
   rol: string;
   expira: string;
 }
+
+export interface Materia {
+  id: number;
+  nombre: string;
+  creditos: number;
+  profesorId: number;
+  nombreProfesor: string;
+}
+
+export interface Companero {
+  nombre: string;
+}
+
+export interface Inscripcion {
+  materias: Materia[];
+  totalCreditos: number;
+  estado: string;
+}

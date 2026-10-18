@@ -1,0 +1,106 @@
+<header class="barra">
+  <span class="marca">Registro de Estudiantes</span>
+  <div class="usuario">
+    <span>Hola, <strong class="nombre">{{ nombre }}</strong></span>
+    <button class="btn btn-secundario" (click)="cerrarSesion()">Cerrar sesión</button>
+  </div>
+</header>
+
+<main class="contenedor">
+  <section class="resumen">
+    <div class="dato">
+      <span class="dato-titulo">Estado</span>
+      <span class="dato-valor">{{ inscripcion()?.estado === 'Completa' ? 'Completa' : 'Pendiente' }}</span>
+    </div>
+    <div class="dato">
+      <span class="dato-titulo">Materias</span>
+      <span class="dato-valor">{{ seleccion().length }} / 3</span>
+    </div>
+    <div class="dato">
+      <span class="dato-titulo">Créditos</span>
+      <span class="dato-valor">{{ totalCreditos() }}</span>
+    </div>
+  </section>
+
+  @if (error()) { <div class="mensaje-error">{{ error() }}</div> }
+  @if (exito()) { <div class="mensaje-exito">{{ exito() }}</div> }
+
+  @if (editando()) {
+    <section class="tarjeta">
+      <div class="encabezado">
+        <div>
+          <h2>Elige tus materias</h2>
+          <p class="ayuda">Selecciona 3 materias de profesores diferentes (3 créditos cada una).</p>
+        </div>
+        <div class="acciones">
+          <button class="btn btn-secundario" (click)="cancelar()">Cancelar</button>
+          <button class="btn" [disabled]="!puedeGuardar() || cargando()" (click)="guardar()">
+            {{ cargando() ? 'Guardando...' : 'Guardar inscripción' }}
+          </button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th></th><th>Materia</th><th>Profesor</th><th>Créditos</th></tr>
+        </thead>
+        <tbody>
+          @for (m of materias(); track m.id) {
+            <tr [class.elegida]="estaSeleccionada(m.id)" [class.bloqueada]="!!motivoBloqueo(m)">
+              <td>
+                <input
+                  type="checkbox"
+                  [checked]="estaSeleccionada(m.id)"
+                  [disabled]="!!motivoBloqueo(m)"
+                  (change)="alternar(m)" />
+              </td>
+              <td>
+                {{ m.nombre }}
+                @if (motivoBloqueo(m)) { <div class="bloqueo">{{ motivoBloqueo(m) }}</div> }
+              </td>
+              <td>{{ m.nombreProfesor }}</td>
+              <td>{{ m.creditos }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  } @else {
+    <section class="tarjeta">
+      <div class="encabezado">
+        <h2>Mis materias</h2>
+        <button class="btn" (click)="iniciarEdicion()">
+          {{ tieneInscripcion() ? 'Modificar inscripción' : 'Inscribir mis materias' }}
+        </button>
+      </div>
+
+      @if (!tieneInscripcion()) {
+        <p class="ayuda">Aún no tienes materias inscritas. Elige 3 materias de profesores diferentes.</p>
+      } @else {
+        <div class="rejilla">
+          @for (m of inscripcion()!.materias; track m.id) {
+            <article class="materia">
+              <h3>{{ m.nombre }}</h3>
+              <p class="profesor">{{ m.nombreProfesor }}</p>
+              <p class="creditos">{{ m.creditos }} créditos</p>
+              <button class="btn btn-secundario pequeno" (click)="verCompaneros(m)">Ver compañeros</button>
+            </article>
+          }
+        </div>
+      }
+    </section>
+
+    @if (materiaCompaneros()) {
+      <section class="tarjeta">
+        <h2>Compañeros de {{ materiaCompaneros() }}</h2>
+        @if (companeros().length === 0) {
+          <p class="ayuda">Aún no hay otros compañeros activos en esta materia.</p>
+        } @else {
+          <ul>
+            @for (c of companeros(); track $index) { <li>{{ c.nombre }}</li> }
+          </ul>
+        }
+      </section>
+    }
+  }
+</main>
