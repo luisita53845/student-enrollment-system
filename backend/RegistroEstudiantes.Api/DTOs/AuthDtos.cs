@@ -4,8 +4,8 @@ namespace RegistroEstudiantes.Api.Dtos;
 
 public class RegistroDto
 {
-    [Required(ErrorMessage = "El documento es obligatorio.")]
-    [StringLength(20, MinimumLength = 5, ErrorMessage = "El documento debe tener entre 5 y 20 caracteres.")]
+    [Required(ErrorMessage = "El número de documento es obligatorio.")]
+    [RegularExpression(@"^\d{5,20}$", ErrorMessage = "El número de documento debe tener entre 5 y 20 dígitos.")]
     public string Documento { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "El nombre es obligatorio.")]
@@ -17,12 +17,14 @@ public class RegistroDto
     [StringLength(150)]
     public string Correo { get; set; } = string.Empty;
 
-    [Phone(ErrorMessage = "El teléfono no tiene un formato válido.")]
-    [StringLength(20)]
-    public string? Telefono { get; set; }
+    [Required(ErrorMessage = "El teléfono es obligatorio.")]
+    [RegularExpression(@"^\+?\d{7,15}$", ErrorMessage = "El teléfono debe tener entre 7 y 15 dígitos.")]
+    public string Telefono { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "La contraseña es obligatoria.")]
     [StringLength(100, MinimumLength = 8, ErrorMessage = "La contraseña debe tener al menos 8 caracteres.")]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$",
+        ErrorMessage = "La contraseña debe incluir mayúscula, minúscula y número.")]
     public string Password { get; set; } = string.Empty;
 }
 

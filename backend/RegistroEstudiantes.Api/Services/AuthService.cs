@@ -37,7 +37,7 @@ public class AuthService
             Documento = documento,
             Nombre = dto.Nombre.Trim(),
             Correo = correo,
-            Telefono = string.IsNullOrWhiteSpace(dto.Telefono) ? null : dto.Telefono.Trim(),
+            Telefono = dto.Telefono.Trim(),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             Rol = "Estudiante",  
             Activo = true,

@@ -54,4 +54,20 @@ public class MateriaService
             .Select(i => new CompaneroDto { Nombre = i.Estudiante.Nombre })
             .ToListAsync();
     }
+
+    public async Task<List<MateriaResumenDto>> ListarResumenAsync()
+    {
+        return await _context.Materias
+            .AsNoTracking()
+            .OrderBy(m => m.Id)
+            .Select(m => new MateriaResumenDto
+            {
+                Id = m.Id,
+                Nombre = m.Nombre,
+                Creditos = m.Creditos,
+                NombreProfesor = m.Profesor.Nombre,
+                InscritosActivos = m.Inscripciones.Count(i => i.Estudiante.Activo)
+            })
+            .ToListAsync();
+    }
 }

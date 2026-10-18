@@ -25,4 +25,9 @@ public class MateriasController : ControllerBase
     [HttpGet("{id:int}/companeros")]
     public async Task<ActionResult<List<CompaneroDto>>> Companeros(int id)
         => Ok(await _service.ObtenerCompanerosAsync(id, User.ObtenerId(), User.IsInRole("Administrador")));
+
+    [HttpGet("resumen")]
+    [Authorize(Roles = "Administrador")]
+    public async Task<ActionResult<List<MateriaResumenDto>>> Resumen()
+        => Ok(await _service.ListarResumenAsync());
 }

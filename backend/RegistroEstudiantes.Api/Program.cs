@@ -19,6 +19,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EstudianteService>();
 builder.Services.AddScoped<MateriaService>();
 builder.Services.AddScoped<InscripcionService>();
+builder.Services.AddScoped<ProfesorService>();
 
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Falta Jwt:Key.");
@@ -45,7 +46,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Angular", policy =>
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200","http://localhost:4201")
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
