@@ -1,0 +1,86 @@
+:root {
+  --azul-900: #0B1F3A;
+  --azul-700: #14325C;
+  --azul-500: #1F4E8C;
+  --azul-100: #E6EDF7;
+  --naranja: #F26B21;
+  --naranja-oscuro: #D95A14;
+  --gris-900: #1A1A1A;
+  --gris-600: #5F6B7A;
+  --gris-200: #E3E7EC;
+  --gris-100: #F4F6F8;
+  --blanco: #FFFFFF;
+  --error: #C0392B;
+  --error-fondo: #FBEAE8;
+  --exito-fondo: #E6EDF7;
+  --radio: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--gris-100);
+  color: var(--gris-900);
+}
+
+h1, h2, h3 { color: var(--azul-900); margin: 0 0 12px; }
+
+.contenedor { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+
+.tarjeta {
+  background: var(--blanco);
+  border: 1px solid var(--gris-200);
+  border-radius: var(--radio);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+label { display: block; font-weight: 600; margin: 12px 0 4px; color: var(--azul-700); }
+
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--gris-200);
+  border-radius: 8px;
+  font-size: 15px;
+  background: var(--blanco);
+}
+input:focus, select:focus { outline: 2px solid var(--azul-500); border-color: var(--azul-500); }
+
+.btn {
+  background: var(--naranja);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover { background: var(--naranja-oscuro); }
+.btn:disabled { background: var(--gris-200); color: var(--gris-600); cursor: not-allowed; }
+.btn-secundario { background: var(--azul-700); }
+.btn-secundario:hover { background: var(--azul-900); }
+.btn-peligro { background: var(--error); }
+
+.mensaje-error {
+  background: var(--error-fondo);
+  color: var(--error);
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+.mensaje-exito {
+  background: var(--exito-fondo);
+  color: var(--azul-700);
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+.error-campo { color: var(--error); font-size: 13px; margin-top: 4px; }
+
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; background: var(--azul-900); color: var(--blanco); padding: 10px; }
+td { padding: 10px; border-bottom: 1px solid var(--gris-200); }
