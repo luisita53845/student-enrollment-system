@@ -35,3 +35,14 @@ export interface Inscripcion {
   totalCreditos: number;
   estado: string;
 }
+
+export interface EstudiantePerfil {
+  id: number;
+  documento: string;
+  nombre: string;
+  correo: string;
+  telefono: string | null;
+  rol: string;
+  activo: boolean;
+  fechaRegistro: string;
+}   

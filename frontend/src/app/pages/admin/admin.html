@@ -1,0 +1,128 @@
+<div class="layout">
+  <aside class="lateral">
+    <div class="marca-lateral">
+      <span class="logo">RE</span>
+      <div>
+        <strong>Registro de</strong><br />
+        <strong>Estudiantes</strong>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a class="menu-item activo">Estudiantes</a>
+    </nav>
+
+    <div class="perfil">
+      <span class="avatar avatar-admin">{{ iniciales(nombre) }}</span>
+      <div class="perfil-datos">
+        <strong>{{ nombre }}</strong>
+        <span>Administrador</span>
+      </div>
+      <button class="salir" (click)="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="principal">
+    @if (aviso()) {
+      <div class="toast" [class.toast-error]="aviso()!.tipo === 'error'" role="status">
+        <span>{{ aviso()!.texto }}</span>
+        <button class="toast-cerrar" (click)="cerrarAviso()" aria-label="Cerrar">×</button>
+      </div>
+    }
+
+    <div class="titulo">
+      <h1>Gestión de estudiantes</h1>
+      <p>Consulta, inactiva, reactiva o elimina cuentas de estudiantes.</p>
+    </div>
+
+    <section class="resumen">
+      <div class="dato">
+        <span class="dato-titulo">Total estudiantes</span>
+        <span class="dato-valor">{{ total() }}</span>
+      </div>
+      <div class="dato">
+        <span class="dato-titulo">Activos</span>
+        <span class="dato-valor">{{ activos() }}</span>
+      </div>
+      <div class="dato">
+        <span class="dato-titulo">Inactivos</span>
+        <span class="dato-valor">{{ inactivos() }}</span>
+      </div>
+      <div class="dato">
+        <span class="dato-titulo">Cuentas activas</span>
+        <span class="dato-valor">{{ porcentajeActivos() }}%</span>
+        <div class="barra-progreso"><div class="relleno" [style.width.%]="porcentajeActivos()"></div></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="herramientas">
+        <input
+          class="buscador"
+          type="search"
+          placeholder="Buscar por nombre, correo o documento"
+          [value]="busqueda()"
+          (input)="cambiarBusqueda($event)" />
+        <div class="pastillas">
+          <button class="pastilla" [class.seleccionada]="filtro() === 'todos'" (click)="filtro.set('todos')">Todos</button>
+          <button class="pastilla" [class.seleccionada]="filtro() === 'activos'" (click)="filtro.set('activos')">Activos</button>
+          <button class="pastilla" [class.seleccionada]="filtro() === 'inactivos'" (click)="filtro.set('inactivos')">Inactivos</button>
+        </div>
+      </div>
+
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr><th>Estudiante</th><th>Documento</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            @for (e of filtrados(); track e.id) {
+              <tr [class.inactivo]="!e.activo">
+                <td>
+                  <div class="persona">
+                    <span class="avatar">{{ iniciales(e.nombre) }}</span>
+                    <div>
+                      <div class="persona-nombre">{{ e.nombre }}</div>
+                      <div class="persona-correo">{{ e.correo }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ e.documento }}</td>
+                <td>{{ e.telefono ?? '—' }}</td>
+                <td>
+                  <span class="estado" [class.estado-activo]="e.activo">{{ e.activo ? 'Activo' : 'Inactivo' }}</span>
+                </td>
+                <td>
+                  <div class="acciones-fila">
+                    @if (esPendiente(e.id, 'inactivar')) {
+                      <span class="confirma">Se borrarán sus materias. ¿Inactivar?</span>
+                      <button class="btn pequeno" [disabled]="cargando()" (click)="inactivar(e)">Sí</button>
+                      <button class="btn btn-secundario pequeno" (click)="cancelarConfirmacion()">No</button>
+                    } @else if (esPendiente(e.id, 'reactivar')) {
+                      <span class="confirma">¿Reactivar esta cuenta?</span>
+                      <button class="btn pequeno" [disabled]="cargando()" (click)="reactivar(e)">Sí</button>
+                      <button class="btn btn-secundario pequeno" (click)="cancelarConfirmacion()">No</button>
+                    } @else if (esPendiente(e.id, 'eliminar')) {
+                      <span class="confirma">Irreversible. ¿Eliminar?</span>
+                      <button class="btn btn-peligro pequeno" [disabled]="cargando()" (click)="eliminar(e)">Sí</button>
+                      <button class="btn btn-secundario pequeno" (click)="cancelarConfirmacion()">No</button>
+                    } @else {
+                      @if (e.activo) {
+                        <button class="accion" (click)="pedirConfirmacion(e.id, 'inactivar')">Inactivar</button>
+                      } @else {
+                        <button class="accion accion-principal" (click)="pedirConfirmacion(e.id, 'reactivar')">Reactivar</button>
+                      }
+                      <button class="accion accion-peligro" (click)="pedirConfirmacion(e.id, 'eliminar')">Eliminar</button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr><td colspan="5" class="vacio">No hay estudiantes que coincidan con la búsqueda.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
