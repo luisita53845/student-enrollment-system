@@ -52,27 +52,34 @@ In MySQL (Workbench or CLI), run in this order:
 
 ### 2. Backend
 
+The API needs two settings: the connection string to **your** MySQL and a JWT key. Choose **one** option.
+
+**Option A (simplest): edit `appsettings.json`**
+
+Open `backend/RegistroEstudiantes.Api/appsettings.json` and replace:
+
+- `Password=CAMBIAR_PASSWORD` → your local MySQL `root` password (also change `Port` if yours is not 3306).
+- `CAMBIAR_ESTA_CLAVE_POR_UNA_DE_32_CARACTERES_O_MAS` → any random text of at least 32 characters.
+
+**Option B: User Secrets (no file edits)**
+
 ```bash
 cd backend/RegistroEstudiantes.Api
-```
-
-Set your connection string and JWT key **without editing tracked files**, using User Secrets:
-
-```bash
 dotnet user-secrets init
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost;Port=3306;Database=registro_estudiantes;User=root;Password=YOUR_PASSWORD;"
 dotnet user-secrets set "Jwt:Key" "a-long-random-phrase-of-at-least-32-characters"
 ```
 
-(Alternative: edit the `CAMBIAR_...` placeholders in `appsettings.json`, without committing those changes.)
-
-Run:
+Then run the API:
 
 ```bash
+cd backend/RegistroEstudiantes.Api
 dotnet run
 ```
 
-The API listens on `http://localhost:5068` and Swagger is at `http://localhost:5068/swagger`.
+The API listens on `http://localhost:5068` (Swagger at `/swagger`).
+
+> Real credentials are never committed to the repository: the committed `appsettings.json` only contains placeholders.
 
 ### 3. Frontend
 
